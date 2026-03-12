@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<title>Admin Panel</title>
+<link rel="stylesheet" href="/static/style.css">
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h2>Admin Panel</h2>
+
+<a href="/add" class="start-btn">Add Question</a>
+
+<br><br>
+
+<table>
+
+<tr>
+<th>Difficulty</th>
+<th>Question</th>
+<th>Action</th>
+</tr>
+
+{% for level,q,index in questions %}
+
+<tr>
+
+<td>{{ level }}</td>
+<td>{{ q.question }}</td>
+
+<td>
+
+<a href="/edit/{{level}}/{{index}}">Edit</a>
+
+|
+
+<a href="/delete/{{level}}/{{index}}">Delete</a>
+
+</td>
+
+</tr>
+
+{% endfor %}
+
+</table>
+
+</div>
+
+</body>
+</html>

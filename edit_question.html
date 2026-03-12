@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<title>Edit Question</title>
+<link rel="stylesheet" href="/static/style.css">
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h2>Edit Question</h2>
+
+<form method="post">
+
+<input name="question" value="{{q.question}}">
+
+<br><br>
+
+<input name="op1" value="{{q.options[0]}}">
+<input name="op2" value="{{q.options[1]}}">
+
+<br><br>
+
+<input name="op3" value="{{q.options[2]}}">
+<input name="op4" value="{{q.options[3]}}">
+
+<br><br>
+
+<input name="answer" value="{{q.answer}}">
+
+<br><br>
+
+<button type="submit">Update</button>
+
+</form>
+
+</div>
+
+</body>
+</html>

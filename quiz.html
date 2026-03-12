@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Quiz</title>
+<link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="progress">
+    <div class="progress-bar" id="bar"></div>
+</div>
+
+<h2>Question {{ q_num }}</h2>
+
+<form method="post">
+
+<p>{{ question }}</p>
+
+{% for option in options %}
+
+<div class="option">
+<input type="radio" name="answer" value="{{ option }}" required>
+{{ option }}
+</div>
+
+{% endfor %}
+
+<br>
+
+<button type="submit">Submit</button>
+
+</form>
+
+</div>
+
+<script>
+let qnum = { q_num };
+let width = qnum * 20;
+document.getElementById("bar").style.width = width + "%";
+</script>
+
+</body>
+</html>

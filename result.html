@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<title>Result</title>
+<link rel="stylesheet" href="/static/style.css">
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>Quiz Completed</h1>
+
+<h2>Your Score: {{ score }} / 50</h2>
+
+<br>
+
+<a href="{{ url_for('start_quiz') }}" class="start-btn">Try Again</a>
+
+</div>
+
+</body>
+</html>
