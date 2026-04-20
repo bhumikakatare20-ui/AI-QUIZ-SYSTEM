@@ -1,0 +1,64 @@
+{% extends 'quiz/base.html' %}
+{% block title %}Quiz{% endblock %}
+{% block content %}
+<div class="quiz-wrap">
+  <div class="progress-wrap">
+    <div class="progress-bar" id="prog"></div>
+  </div>
+  <p id="prog-label" class="prog-label">Question 1 of {{ questions|length }}</p>
+
+  <form method="POST" action="{% url 'result' %}">
+    {% csrf_token %}
+
+    {% if source == 'ai' %}
+      {% for q in questions %}
+      <div class="question-card {% if not forloop.first %}hidden{% endif %}" data-i="{{ forloop.counter0 }}">
+        <h3>Q{{ forloop.counter }}. {{ q.question }}</h3>
+        <div class="options">
+          {% for key, val in q.options.items %}
+          <label class="option">
+            <input type="radio" name="answer_{{ forloop.parentloop.counter0 }}" value="{{ key }}" required>
+            <span class="opt-key">{{ key|upper }}</span> {{ val }}
+          </label>
+          {% endfor %}
+        </div>
+      </div>
+      {% endfor %}
+    {% else %}
+      {% for q in questions %}
+      <div class="question-card {% if not forloop.first %}hidden{% endif %}" data-i="{{ forloop.counter0 }}">
+        <h3>Q{{ forloop.counter }}. {{ q.question_text }}</h3>
+        <div class="options">
+          <label class="option"><input type="radio" name="answer_{{ q.id }}" value="a" required><span class="opt-key">A</span> {{ q.option_a }}</label>
+          <label class="option"><input type="radio" name="answer_{{ q.id }}" value="b"><span class="opt-key">B</span> {{ q.option_b }}</label>
+          <label class="option"><input type="radio" name="answer_{{ q.id }}" value="c"><span class="opt-key">C</span> {{ q.option_c }}</label>
+          <label class="option"><input type="radio" name="answer_{{ q.id }}" value="d"><span class="opt-key">D</span> {{ q.option_d }}</label>
+        </div>
+      </div>
+      {% endfor %}
+    {% endif %}
+
+    <div class="nav-btns">
+      <button type="button" class="btn-sec" id="prev" onclick="move(-1)" disabled>← Prev</button>
+      <button type="button" class="btn-primary" id="nxt" onclick="move(1)">Next →</button>
+      <button type="submit" class="btn-green hidden" id="sub">Submit Quiz ✓</button>
+    </div>
+  </form>
+</div>
+
+<script>
+let cur = 0;
+const cards = document.querySelectorAll('.question-card');
+const total = cards.length;
+function move(d) {
+  cards[cur].classList.add('hidden');
+  cur += d;
+  cards[cur].classList.remove('hidden');
+  document.getElementById('prev').disabled = cur === 0;
+  document.getElementById('nxt').classList.toggle('hidden', cur === total - 1);
+  document.getElementById('sub').classList.toggle('hidden', cur !== total - 1);
+  document.getElementById('prog').style.width = ((cur+1)/total*100)+'%';
+  document.getElementById('prog-label').textContent = `Question ${cur+1} of ${total}`;
+}
+</script>
+{% endblock %}

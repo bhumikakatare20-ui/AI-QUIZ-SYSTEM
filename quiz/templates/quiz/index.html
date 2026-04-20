@@ -1,0 +1,51 @@
+{% extends 'quiz/base.html' %}
+{% block title %}Home — AI Quiz{% endblock %}
+{% block content %}
+<div class="hero">
+  <h1>🧠 Welcome to AI Quiz System</h1>
+  <p>Test your knowledge with AI-powered questions!</p>
+  <p class="stat">📚 {{ total }} questions in database</p>
+</div>
+
+<form method="POST" action="{% url 'quiz_start' %}" class="card quiz-form">
+  {% csrf_token %}
+  <h2>Start a New Quiz</h2>
+
+  <div class="form-group">
+    <label>Select Category</label>
+    <select name="category">
+      <option value="all">All Categories</option>
+      {% for cat in categories %}
+        <option value="{{ cat }}">{{ cat|title }}</option>
+      {% endfor %}
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label>Number of Questions</label>
+    <select name="num_questions">
+      <option value="5">5 Questions</option>
+      <option value="10" selected>10 Questions</option>
+      <option value="15">15 Questions</option>
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label class="checkbox-label">
+      <input type="checkbox" name="use_ai" id="use_ai" onchange="toggleAI(this)">
+      Generate questions on custom topic
+    </label>
+    <div id="ai-box" style="display:none; margin-top:10px;">
+      <input type="text" name="ai_topic" placeholder="e.g. Python, Django, Machine Learning..." class="text-input">
+    </div>
+  </div>
+
+  <button type="submit" class="btn-primary">Start Quiz →</button>
+</form>
+
+<script>
+function toggleAI(cb) {
+  document.getElementById('ai-box').style.display = cb.checked ? 'block' : 'none';
+}
+</script>
+{% endblock %}

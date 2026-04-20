@@ -1,0 +1,29 @@
+{% extends 'quiz/base.html' %}
+{% block title %}Result{% endblock %}
+{% block content %}
+<div class="card result-top">
+  <div class="grade grade-{{ grade|lower }}">{{ grade }}</div>
+  <h1>{{ score }} / {{ total }}</h1>
+  <div class="pct">{{ percentage }}%</div>
+  <p>
+    {% if percentage >= 90 %}🏆 Excellent! Outstanding!
+    {% elif percentage >= 75 %}🎉 Great job! Well done!
+    {% elif percentage >= 60 %}👍 Good effort! Keep it up!
+    {% else %}📚 Keep practicing!{% endif %}
+  </p>
+  <a href="{% url 'index' %}" class="btn-primary" style="display:inline-block; margin-top:16px; text-decoration:none;">Play Again</a>
+</div>
+
+<h2 style="color:white; margin-bottom:14px;">Review Answers</h2>
+{% for r in results %}
+<div class="result-item {% if r.is_correct %}correct{% else %}wrong{% endif %}">
+  <div class="r-icon">{% if r.is_correct %}✓{% else %}✗{% endif %}</div>
+  <div>
+    <p><strong>{{ r.question }}</strong></p>
+    <p>Your answer: {{ r.user_answer }}</p>
+    {% if not r.is_correct %}<p>Correct: <span class="green">{{ r.correct_answer }}</span></p>{% endif %}
+    {% if r.explanation %}<p class="expl">💡 {{ r.explanation }}</p>{% endif %}
+  </div>
+</div>
+{% endfor %}
+{% endblock %}

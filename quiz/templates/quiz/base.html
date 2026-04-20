@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}AI Quiz{% endblock %}</title>
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'quiz/style.css' %}">
+</head>
+<body>
+  <nav class="navbar">
+    <a href="{% url 'index' %}" class="nav-brand">🧠 AI Quiz System</a>
+    <a href="/admin/" class="nav-link">Admin Panel</a>
+  </nav>
+  <main class="main-content">
+    {% block content %}{% endblock %}
+  </main>
+</body>
+</html>
